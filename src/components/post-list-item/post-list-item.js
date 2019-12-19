@@ -25,10 +25,12 @@ export default class PostListItem extends Component {
         super(props);
         this.state = {
             important: false,
-            like: false
+            like: false,
+            label: props.label
         };
         this.onImportant = this.onImportant.bind(this);
         this.onLike = this.onLike.bind(this);
+        this.onEdit = this.onEdit.bind(this);
     }
 
     onImportant() {
@@ -41,10 +43,18 @@ export default class PostListItem extends Component {
             like: !like // меняемм important на противоположное значение
         }))
     }
+    onEdit() {
+        let editPost = prompt('Add changes', this.state.label);
+        if (editPost) {
+            this.setState(({label}) => ({
+                label: editPost
+            }))
+        }
+    }
 
     render() {
-        const {label} = this.props;
-        const {important, like} = this.state;
+        // const {label} = this.props;
+        const {important, like, label} = this.state;
         let classNames = 'app-list-item d-flex justify-content-between';
         if (important) {
             classNames += ' important';
@@ -55,17 +65,22 @@ export default class PostListItem extends Component {
         return (
             <div className={classNames}>
                 <div>
-                    <span className="time-date">{date.getFullDate()}</span>
                     <span className="app-list-item-label"
                           onClick={this.onLike}>
                         {label}
                     </span>
+                    <span className="time-date">{date.getFullDate()}</span>
                 </div>
                 <div className="d-flex justify-content-center align-items-center">
                     <button type="button"
                             className="btn-star btn-sm"
                             onClick={this.onImportant}>
                         <i className="fa fa-star"></i>
+                    </button>
+                    <button type="button"
+                            className="btn-wrench btn-sm"
+                            onClick={this.onEdit}>
+                        <i className="fa fa-wrench"></i>
                     </button>
                     <button type="button" className="btn-trash btn-sm">
                         <i className="fa fa-trash-o"></i>

@@ -17,6 +17,9 @@
 .app-list-item .btn-star {
     color: #FFD700;
 }
+.app-list-item .btn-wrench {
+    color: grey;
+}
 .app-list-item .btn-trash {
     color: red;
 }
