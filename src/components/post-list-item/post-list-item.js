@@ -6,7 +6,9 @@ class DateCreating {
     constructor() {
         let date = new Date();
         this._date = [date.getDate(), date.getMonth() + 1, date.getFullYear()].join('/');
-        this._time = [date.getHours(), date.getMinutes()].join(':');
+        let minutes = date.getMinutes();
+        if (minutes < 10) minutes = '0' + minutes;
+        this._time = [date.getHours(), minutes].join(':');
     }
     getFullDate() {
         return this._time + ' ' + this._date;
