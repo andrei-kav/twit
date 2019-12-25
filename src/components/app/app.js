@@ -25,20 +25,21 @@ export default class App extends Component {
         super(props);
         this.state = {
             data: [ // этот массив якобы пришел с сервера
-                {label: 'Going to learn react', important: true, id: 1},
-                {label: 'That is so good', important: false, id: 2},
-                {label: 'I need a break', important: false, id: 3}
+                {label: 'Going to learn react', important: true, like: false, id: 1},
+                {label: 'That is so good', important: false, like: false, id: 2},
+                {label: 'I need a break', important: false, like: false, id: 3}
             ]
         };
 
-        this.deleteItem = this.deleteItem.bind(this);
+        this.onDeleteItem = this.onDeleteItem.bind(this);
         this.addItem = this.addItem.bind(this);
+        this.onToggleImportant = this.onToggleImportant.bind(this);
+        this.onToggleLike = this.onToggleLike.bind(this);
     }
     addPostId() {
         return nextId();
     }
-
-    deleteItem(id) {
+    onDeleteItem(id) {
         const del = window.confirm("Are you sure?");
         if (del) {
             this.setState(({data}) => {
@@ -58,7 +59,6 @@ export default class App extends Component {
             important: false,
             id: this.addPostId()
         };
-        console.log(this.state.data[0].id);
         this.setState(({data}) => {
             const newArr = [newItem, ...data];
             return {
@@ -66,16 +66,39 @@ export default class App extends Component {
             }
         })
     }
+    onToggleImportant(id) {
+        console.log(id);
+    }
+    onToggleLike(id) {
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id);
+            const old = data[index];
+            //теперь в новый объект newItem записываем все из старого (old). При этом значение св-ва like, если оно есть (а оно есть), заменится на противоположное
+            const newItem = {...old, like: !old.like};
+            // создаеи новый массив data; тем же путем, что и в deleteItem()
+            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+            return {
+                data: newArr
+            }
+        })
+    }
 
     render() {
+        const {data} = this.state;
+        const liked = data.filter(item => item.like).length;
+        const allPosts = data.length;
         return (
             <div className="app">
-                <AppHeader />
+                <AppHeader liked={liked}
+                           allPosts={allPosts}/>
                 <div className="search-panel d-flex">
                     <SearchPanel />
                     <PostStatusFiler />
                 </div>
-                <PostList posts={this.state.data} onDelete={this.deleteItem}/>
+                <PostList posts={this.state.data}
+                          onDelete={this.onDeleteItem}
+                          onToggleImportant={this.onToggleImportant}
+                          onToggleLike={this.onToggleLike}/>
                 <PostAddForm onAdd={this.addItem}/>
             </div>
         )

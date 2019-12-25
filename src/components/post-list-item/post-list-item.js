@@ -19,27 +19,14 @@ export default class PostListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            important: props.important,
-            like: false,
+            // important: props.important,
+            // like: false,
             label: props.label,
             date: new DateCreating().getFullDate()
         };
-        // this.date = new DateCreating().getFullDate();
-        this.onImportant = this.onImportant.bind(this);
-        this.onLike = this.onLike.bind(this);
         this.onEdit = this.onEdit.bind(this);
     }
 
-    onImportant() {
-        this.setState(({important}) => ({
-            important: !important // меняемм important на противоположное значение
-        }))
-    }
-    onLike() {
-        this.setState(({like}) => ({
-            like: !like // меняемм important на противоположное значение
-        }))
-    }
     onEdit() {
         let editPost = prompt('Add changes', this.state.label);
         if (editPost) {
@@ -51,8 +38,8 @@ export default class PostListItem extends Component {
     }
 
     render() {
-        const {onDelete} = this.props;
-        const {important, like, label, date} = this.state;
+        const {onDelete, onToggleImportant, onToggleLike, important, like} = this.props;
+        const {label, date} = this.state;
         let classNames = 'app-list-item d-flex justify-content-between';
         if (important) {
             classNames += ' important';
@@ -64,7 +51,7 @@ export default class PostListItem extends Component {
             <div className={classNames}>
                 <div>
                     <span className="app-list-item-label"
-                          onClick={this.onLike}>
+                          onClick={onToggleLike}>
                         {label}
                     </span>
                     <span className="time-date">{date}</span>
@@ -72,7 +59,7 @@ export default class PostListItem extends Component {
                 <div className="d-flex justify-content-center align-items-center">
                     <button type="button"
                             className="btn-star btn-sm"
-                            onClick={this.onImportant}>
+                            onClick={onToggleImportant}>
                         <i className="fa fa-star"></i>
                     </button>
                     <button type="button"
