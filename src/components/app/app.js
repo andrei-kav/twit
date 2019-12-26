@@ -36,8 +36,16 @@ export default class App extends Component {
         this.onToggleImportant = this.onToggleImportant.bind(this);
         this.onToggleLike = this.onToggleLike.bind(this);
     }
-    addPostId() {
+    _addPostId() {
         return nextId();
+    }
+    _changePropValue(data, id, prop) {
+        const index = data.findIndex(elem => elem.id === id);
+        const old = data[index];
+        old[prop] = !old[prop];
+        // создаеи новый массив с постами newArr
+        const newArr = [...data.slice(0, index), old, ...data.slice(index + 1)];
+        return newArr;
     }
     onDeleteItem(id) {
         const del = window.confirm("Are you sure?");
@@ -57,7 +65,7 @@ export default class App extends Component {
         const newItem = {
             label: body,
             important: false,
-            id: this.addPostId()
+            id: this._addPostId()
         };
         this.setState(({data}) => {
             const newArr = [newItem, ...data];
@@ -67,18 +75,16 @@ export default class App extends Component {
         })
     }
     onToggleImportant(id) {
-        console.log(id);
+        this.setState(({data}) => {
+            return {
+                data: this._changePropValue(data, id, 'important')
+            };
+        })
     }
     onToggleLike(id) {
         this.setState(({data}) => {
-            const index = data.findIndex(elem => elem.id === id);
-            const old = data[index];
-            //теперь в новый объект newItem записываем все из старого (old). При этом значение св-ва like, если оно есть (а оно есть), заменится на противоположное
-            const newItem = {...old, like: !old.like};
-            // создаеи новый массив data; тем же путем, что и в deleteItem()
-            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
             return {
-                data: newArr
+                data: this._changePropValue(data, id, 'like')
             }
         })
     }
