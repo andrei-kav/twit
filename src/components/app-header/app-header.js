@@ -22,14 +22,14 @@ import "./app-header.css";
 // `;
 // Внизу, в return, вместо div'а пишем <Header>...</Header>
 
-const AppHeader = ({liked, allPosts}) => {
+const AppHeader = ({allPosts, important, liked}) => {
     return (
         <div className="app-header d-flex">
             <h1>
                 Andrei Kav
             </h1>
             <h2>
-                {allPosts} posts, liked {liked}
+                {allPosts} posts, important {important}, liked {liked}
             </h2>
         </div>
     )

@@ -38,13 +38,13 @@ export default class PostListItem extends Component {
     }
 
     render() {
-        const {onDelete, onToggleImportant, onToggleLike, important, like} = this.props;
+        const {onDelete, onToggleImportant, onToggleLike, important, liked} = this.props;
         const {label, date} = this.state;
         let classNames = 'app-list-item d-flex justify-content-between';
         if (important) {
             classNames += ' important';
         }
-        if (like) {
+        if (liked) {
             classNames += ' like';
         }
         return (

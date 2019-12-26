@@ -8,6 +8,9 @@ import "./post-list.css";
 import PostListItem from "../post-list-item";
 
 const PostList = ({posts, onDelete, onToggleImportant, onToggleLike}) => {
+    if (typeof posts === 'string') {
+        return <div>{posts}</div>
+    }
     const elements = posts.map((item) => {
         if (typeof item === 'object') {
             const {id, ...itemProps} = item;
