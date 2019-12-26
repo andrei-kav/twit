@@ -64,7 +64,10 @@ export default class App extends Component {
     }
     _searchPost(items, term) {
         // поиск хотя бы по двум буквам
-        const newTerm = term.split(' ').filter(item => item.length > 1);
+        const newTerm = term.toLowerCase().split(' ').filter((item) => {
+            return item.length > 1;
+        });
+
         if (newTerm.length === 0) {
             return items;
         }
@@ -72,7 +75,7 @@ export default class App extends Component {
         const newItems = items.filter((item) => {
             // indexOf(term) возвратит -1 если ничего не найдет
             for (let i = 0; i < newTerm.length; i++) {
-                if (item.label.indexOf(newTerm[i]) > -1) return true;
+                if (item.label.toLowerCase().indexOf(newTerm[i]) > -1) return true;
             }
         });
 

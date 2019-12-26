@@ -8,7 +8,9 @@ class DateCreating {
         this._date = [date.getDate(), date.getMonth() + 1, date.getFullYear()].join('/');
         let minutes = date.getMinutes();
         if (minutes < 10) minutes = '0' + minutes;
-        this._time = [date.getHours(), minutes].join(':');
+        let hours = date.getHours();
+        if (hours < 10) hours = '0' + hours;
+        this._time = [hours, minutes].join(':');
     }
     getFullDate() {
         return this._time + ' ' + this._date;
