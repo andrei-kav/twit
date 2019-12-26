@@ -2,7 +2,7 @@ import React, {Component} from "react";
 
 import "./post-add-form.css";
 
-export default class PostAddForm extends Component {
+export default class q extends Component {
     constructor(props) {
         super(props);
         this.state = {
