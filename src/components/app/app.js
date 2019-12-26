@@ -65,6 +65,7 @@ export default class App extends Component {
         const newItem = {
             label: body,
             important: false,
+            like: false,
             id: this._addPostId()
         };
         this.setState(({data}) => {
