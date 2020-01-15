@@ -5,13 +5,14 @@ import "./post-list-item.sass";
 class DateCreating {
     constructor() {
         let date = new Date();
-        this._date = [date.getDate(), date.getMonth() + 1, date.getFullYear()].join('/');
-        let minutes = date.getMinutes();
-        if (minutes < 10) minutes = '0' + minutes;
-        let hours = date.getHours();
-        if (hours < 10) hours = '0' + hours;
-        this._time = [hours, minutes].join(':');
+        this._date = [date.getDate(), this._isLessTen(date.getMonth() + 1), date.getFullYear()].join('/');
+        this._time = [this._isLessTen(date.getHours()), this._isLessTen(date.getMinutes())].join(':');
     }
+    _isLessTen = (arg) => {
+        return arg < 10
+            ? '0' + arg
+            : arg;
+    };
     getFullDate() {
         return this._time + ' ' + this._date;
     }

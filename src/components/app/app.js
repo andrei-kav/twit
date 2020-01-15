@@ -50,12 +50,11 @@ export default class App extends Component {
         const index = data.findIndex(elem => elem.id === id);
         const old = data[index];
         old[prop] = !old[prop];
-        // создаеи новый массив с постами newArr
+        // создаем новый массив с постами newArr
         const newArr = [...data.slice(0, index), old, ...data.slice(index + 1)];
         return newArr;
     }
     _helpToFilter(items, prop) {
-        console.log(prop);
         const newItems = items.filter(item => item[prop]);
         if (newItems.length === 0) {
             return `There is no ${prop} posts`
@@ -67,7 +66,6 @@ export default class App extends Component {
         const newTerm = term.toLowerCase().split(' ').filter((item) => {
             return item.length > 1;
         });
-
         if (newTerm.length === 0) {
             return items;
         }
@@ -91,13 +89,12 @@ export default class App extends Component {
         }
         switch (filter) {
             case 'all':
+                if (items.length === 0) return `There is no posts yet. Be the first one)`;
                 return items;
             case 'important':
                 return this._helpToFilter(items, filter);
-                break;
             case 'liked':
                 return this._helpToFilter(items, filter);
-                break;
             default:
                 return `Unknown filter "${filter}"`;
         }
